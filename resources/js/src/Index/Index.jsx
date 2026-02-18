@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom"
 function Index() {
   const navigate = useNavigate();
 
-// El Andrés es mariquita
+// El Andrés es un genio
    function irAlEventos(){
     
 
