@@ -1,28 +1,37 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
-import "../Index/styles.css";
-import React from "react";
 
-import { IndexHelperContext } from "../Index/helpers/IndexHelper";
+import "../Index/styles.css";
+
+import { UsuarioHelperContext } from "../Usuario/Helpers/UsuarioHelper";
 import { useContext } from "react";
 import Header from "../shared/Header";
-import Footer from "./Footer";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Footer from "../shared/Footer";
+
 
 function Login() {
 
-    let { comprobarUsuario } = useContext(IndexHelperContext)
+    const { login } = useContext(UsuarioHelperContext)
+    const navigate = useNavigate();
 
-      function procesa(ev) {
-            ev.preventDefault();
-            const obj = {
-              email: ev.target.email.value,
-              contrasena: ev.target.passw.value
-            }      
-            comprobarUsuario(obj);
+    const procesa = async (ev) => {
+        ev.preventDefault();  
+
+        const obj = {
+          email: ev.target.email.value,
+          password: ev.target.password.value
         }
 
-        
+        const resultado = await login(obj);
+
+        if(resultado.success) {
+            navigate("/")
+        }else{
+          alert("Usuario o contraseña incorrectos")
+        }
+    }      
 
   return ( 
     <>
@@ -59,7 +68,7 @@ function Login() {
                     Contraseña
                   </label>
                   <input
-                  name="passw"
+                  name="password"
                     type="password"
                     className="form-control form-control-dark"
                     placeholder="••••••••"
@@ -82,7 +91,7 @@ function Login() {
                     className="btn btn-outline-dark w-100 text"
                     
                   >
-                    <Link to="/register">Crear cuenta</Link>
+                    <Link to="/registro">Crear cuenta</Link>
                   </button>
                 </div>
               </form>

@@ -1,30 +1,30 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
+
 import "../Index/styles.css";
-import { IndexHelperContext } from "../Index/helpers/IndexHelper";
 import { useContext } from "react";
-import React from "react";
 
 import Header from "../shared/Header";
 import Footer from "../shared/Footer";
 import { Link } from "react-router-dom";
-import Login from "./Login";
+import { UsuarioHelperContext } from "./Helpers/UsuarioHelper";
 
 function Register() {
-  let { registrarUsuario } = useContext(IndexHelperContext);
+  let { register } = useContext(UsuarioHelperContext);
 
   function procesa(ev) {
     ev.preventDefault();
     const obj = {
       nombre: ev.target.nombre.value,
+      nombreUsuario: ev.target.nombreUsuario.value,
       apellidos: ev.target.apellidos.value,
-      user: ev.target.email.value,
-      contrasena: ev.target.passw.value,
-      administrador: false,
-      direccion: "",
+      email: ev.target.email.value,
+      password: ev.target.password.value,
+      admin: false,
+      direccion: ev.target.direccion.value,
       puntosAcumulados: 0
     };
-    registrarUsuario(obj);
+    register(obj);
   }
 
   return (
@@ -54,6 +54,16 @@ function Register() {
                 required
               />
             </div>
+             <div className="mb-3">
+              <label className="form-label">Nombre Usuario</label>
+              <input
+                type="text"
+                name="nombreUsuario"
+                className="form-control form-control-dark"
+                placeholder="xxxxx"
+                required
+              />
+            </div>
             <div className="mb-3">
               <label className="form-label">Email</label>
               <input
@@ -64,11 +74,21 @@ function Register() {
                 required
               />
             </div>
+             <div className="mb-3">
+              <label className="form-label">Direccion</label>
+              <input
+                type="text"
+                name="direccion"
+                className="form-control form-control-dark"
+                placeholder="C/Ave del paraiso"
+                required
+              />
+            </div>
             <div className="mb-3">
               <label className="form-label">Contraseña</label>
               <input
                 type="password"
-                name="passw"
+                name="password"
                 className="form-control form-control-dark"
                 placeholder="••••••••"
                 required
